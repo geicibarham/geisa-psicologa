@@ -1,0 +1,14 @@
+.pilar-container {
+    width: 90%;
+   
+}
+.pilar-outer {
+    display: flex;
+    justify-content: center;
+     border-radius: 20px;
+}
+.contact-box {
+    background: transparent;
+    box-shadow: 0px 4px 20px rgba(94, 75, 86, 0.08);
+    border-radius: 15px;
+}
