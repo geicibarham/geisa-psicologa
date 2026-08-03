@@ -5,7 +5,7 @@ import Pillars  from './components/Pillars'
 import About    from './components/About'
 import FAQ      from './components/FAQ'
 import Footer   from './components/Footer'
-import Contact  from './components/Contact'
+import Contact  from './components/contact'
 
 export default function App() {
   return (
