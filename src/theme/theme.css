@@ -12,3 +12,7 @@
     box-shadow: 0px 4px 20px rgba(94, 75, 86, 0.08);
     border-radius: 15px;
 }
+
+.footer-designer {
+  max-height: 80%;
+}

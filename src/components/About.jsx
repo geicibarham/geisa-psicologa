@@ -1,12 +1,18 @@
-import { Box, Grid, GridItem, Heading, Text, Button, Link, Image } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, Grid, GridItem, Heading, Text, Button, Image, Collapse } from '@chakra-ui/react';
 import aboutMe from '../../public/SOBREMIM.jpg';
 import folhagem from '../../public/folhagem.png';
 
 export default function About() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = () => setIsExpanded((prev) => !prev);
+
   return (
     <Box id="about" bg="brand.bg" py={{ base: 16, md: 24 }}>
       <Grid
-        maxW="1600px" mx="auto"
+        maxW="1600px"
+        mx="auto"
         px={{ base: 5, md: 10 }}
         templateColumns={{ base: '1fr', md: '480px 1fr 320px' }}
         gap={{ base: 3, md: 6 }}
@@ -46,21 +52,62 @@ export default function About() {
             Prazer, sou<br />Geisa Costa
           </Heading>
 
-          <Text
-            fontFamily="'Inter', sans-serif"
-            fontSize="lg"
-            color="brand.muted"
-            lineHeight={1.85}
-            mb={8}
-            maxW="46ch"
-          >
-            Sou psicóloga, psicanalista, mestre e doutora em Psicanálise pela PUC-PR.
-            Acredito que cada história é única e merece ser ouvida com respeito,
-            atenção e sensibilidade.
-          </Text>
+          {/* Hidden/Expanded Content with Accessibility Properties */}
+          <Collapse in={isExpanded} animateOpacity id="about-more-text">
+            <Text
+              fontFamily="'Inter', sans-serif"
+              fontSize="lg"
+              color="brand.muted"
+              lineHeight={1.85}
+              mb={8}
+              maxW="46ch"
+            >
+              Sou mestre e doutora em Psicanálise pela PUC-PR. Trabalho em consultório com escuta psicanalítica há mais de dez anos. <br></br>
+              Minha atuação clínica é orientada pela escuta das singularidades de cada sujeito, considerando sua história, seus conflitos e os sentidos que atravessam sua experiência emocional.
+              <br />
+              Acredito na construção de um espaço ético, acolhedor e livre de julgamentos, onde seja possível elaborar questões, ampliar a compreensão de si e construir novas formas de existir.
+            </Text>
 
-          <Button as={Link} href="#contato" variant="primary">
-            Conhecer Mais Sobre Mim
+
+            <Text
+              fontFamily="'Inter', sans-serif"
+              fontSize="lg"
+              color="brand.muted"
+              lineHeight={1.85}
+              maxW="46ch"
+              fontWeight={'bold'}
+
+            >
+              DIFERENCIAIS:
+            </Text>
+            <Text
+              fontFamily="'Inter', sans-serif"
+              fontSize="lg"
+              color="brand.muted"
+              lineHeight={1.85}
+              mb={8}
+              maxW="46ch"
+
+            >
+              <ul>
+                <li> Atendimento individualizado</li>
+                <li> Escuta ética e acolhedora</li>
+                <li> Formação sólida em psicanálise</li>
+                <li> Atendimento online e presencial</li>
+              </ul>
+            </Text>
+
+          </Collapse>
+
+          {/* Toggle Button */}
+          <Button
+            onClick={toggleExpand}
+            variant="primary"
+            aria-expanded={isExpanded}
+            aria-controls="about-more-text"
+            mt={!isExpanded ? 4 : 0}
+          >
+            {isExpanded ? 'Mostrar Menos' : 'Conhecer Mais Sobre Mim'}
           </Button>
         </GridItem>
 
@@ -70,5 +117,5 @@ export default function About() {
         </GridItem>
       </Grid>
     </Box>
-  )
+  );
 }

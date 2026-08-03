@@ -1,35 +1,13 @@
 import {
-  Box, Flex, Grid, GridItem, Text, Link, HStack, VStack, Icon,
+  Box, Flex, Grid, GridItem, Text, Link, HStack, VStack, Icon, Button,
 } from '@chakra-ui/react'
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
-
-const NAV_COLS = [
-  {
-    title: 'Navegação',
-    links: [
-      { label: 'Início',       href: '#hero' },
-      { label: 'Sobre',        href: '#about' },
-      { label: 'Atendimentos', href: '#atendimentos' },
-      { label: 'Abordagem',    href: '#abordagem' },
-    ],
-  },
-  {
-    title: 'Informações',
-    links: [
-      { label: 'FAQ',     href: '#faq' },
-      { label: 'Contato', href: '#contato' },
-    ],
-  },
-  {
-    title: 'Atendimento',
-    links: [{ label: 'Online e presencial', href: '#' }],
-    social: true,
-  },
-]
+import { MdEmail, MdLocationOn } from 'react-icons/md'
 
 export default function Footer() {
   return (
-    <Box id="abordagem" as="footer" bg="brand.fig">
+    <Box id="abordagem" as="footer" bg="brand.fig" position="relative">
+
       {/* Gold top line */}
       <Box
         h="1px"
@@ -37,16 +15,18 @@ export default function Footer() {
         opacity={0.5}
       />
 
+      {/* Main grid */}
       <Grid
-         mx="auto"
-        px={{ base: 5, md: 10 }}
-        templateColumns={{ base: '1fr', sm: 'repeat(2, 1fr)', md: '220px repeat(3, 1fr)' }}
-        gap={8}
-        py={14}
+        mx="auto"
+        px={{ base: 6, md: 14 }}
+        pt={16} pb={16}
+        templateColumns={{ base: '1fr', md: '280px 1fr 1fr 1fr 1fr' }}
+        gap={{ base: 10, md: 8 }}
       >
-        {/* Brand */}
-        <GridItem colSpan={{ base: 1, sm: 2, md: 1 }}>
-          <Flex align="center" gap={3} mb={4}>
+
+        {/* Brand + tagline + CTA */}
+        <GridItem>
+          <Flex align="center" gap={3} mb={5}>
             <Flex
               w="65px" h="65px"
               border="1px solid" borderColor="rgba(201,164,106,0.45)"
@@ -61,96 +41,261 @@ export default function Footer() {
             <Box lineHeight={1.15}>
               <Text
                 fontFamily="'Manrope', sans-serif"
-                fontSize="0.72rem" fontWeight="600"
-                letterSpacing="0.12em"
+                fontSize="0.8rem" fontWeight="600"
+                letterSpacing="0.14em"
                 color="rgba(255,255,255,0.9)"
               >
                 GEISA COSTA
               </Text>
               <Text
                 fontFamily="'Manrope', sans-serif"
-                fontSize="0.5rem" letterSpacing="0.18em"
+                fontSize="0.55rem" letterSpacing="0.2em"
                 textTransform="uppercase"
-                color="#fff"
+                color="rgba(255,255,255,0.5)"
               >
                 Psicanalista
               </Text>
             </Box>
           </Flex>
+
+          <Text
+            fontFamily="'Cormorant Garamond', serif"
+            fontSize="1.1rem"
+            fontWeight={300}
+            fontStyle="italic"
+            color="rgba(255,255,255,0.7)"
+            lineHeight={1.6}
+            mb={6}
+            maxW="22ch"
+          >
+            Um espaço seguro para compreender, elaborar e transformar.
+          </Text>
+
+          <Button
+            as={Link}
+            href="https://wa.me/5541987820288"
+            isExternal
+            variant="outline_fig"
+            borderColor="rgba(255,255,255,0.35)"
+            color="white"
+            fontSize="0.65rem"
+            px={6} py={3}
+            mb={4}
+            _hover={{ bg: 'rgba(255,255,255,0.1)', textDecoration: 'none' }}
+          >
+            Agendar Conversa
+          </Button>
+
+          <Text
+            fontFamily="'Manrope', sans-serif"
+            fontSize="0.58rem"
+            letterSpacing="0.14em"
+            textTransform="uppercase"
+            color="rgba(255,255,255,0.35)"
+            mt={3}
+          >
+            Atendimento Online e Presencial
+          </Text>
         </GridItem>
 
-        {/* Nav columns */}
-        {NAV_COLS.map(({ title, links, social }) => (
-          <GridItem key={title}>
-            <Text
-              fontFamily="'Manrope', sans-serif"
-              fontSize="1.0rem" fontWeight="700"
-              letterSpacing="0.16em" textTransform="uppercase"
-              color="#fff" mb={5}
-            >
-              {title}
-            </Text>
-            <VStack align="start" spacing={3}>
-              {links.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  fontFamily="'Inter', sans-serif"
-                  fontSize="lg"
-                  color="#fff"
-                  _hover={{ color: 'white', textDecoration: 'none' }}
-                >
-                  {label}
-                </Link>
-              ))}
-            </VStack>
+        {/* Navegação */}
+        <GridItem>
+          <Text
+            fontFamily="'Manrope', sans-serif"
+            fontSize="0.7rem" fontWeight="700"
+            letterSpacing="0.18em" textTransform="uppercase"
+            color="white" mb={3}
+          >
+            Navegação
+          </Text>
+          <Box w="full" h="1px" bg="rgba(201,164,106,0.3)" mb={5} position="relative">
+            <Box w="4px" h="4px" bg="brand.gold" borderRadius="full"
+              position="absolute" top="-1.5px" left="0" />
+          </Box>
+          <VStack align="start" spacing={3}>
+            {['Início', 'Sobre', 'Atendimentos', 'Abordagem'].map(label => (
+              <Link key={label} href={`#${label.toLowerCase()}`}
+                fontFamily="'Inter', sans-serif" fontSize="sm"
+                color="rgba(255,255,255,0.65)"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+              >
+                {label}
+              </Link>
+            ))}
+          </VStack>
+        </GridItem>
 
-            {social && (
-              <HStack spacing={4} mt={6}>
-                <Link href="https://instagram.com/" isExternal aria-label="Instagram"
-                  color="#fff"
-                  transition="color 0.2s"
-                >
-                  <Icon as={FaInstagram} boxSize={8} />
-                </Link>
-                <Link href="https://wa.me/5541987820288" isExternal aria-label="WhatsApp"
-                  color="#fff"
-                  transition="color 0.2s"
-                >
-                  <Icon as={FaWhatsapp} boxSize={8} />
-                </Link>
-              </HStack>
-            )}
-          </GridItem>
-        ))}
+        {/* Informações */}
+        <GridItem>
+          <Text
+            fontFamily="'Manrope', sans-serif"
+            fontSize="0.7rem" fontWeight="700"
+            letterSpacing="0.18em" textTransform="uppercase"
+            color="white" mb={3}
+          >
+            Informações
+          </Text>
+          <Box w="full" h="1px" bg="rgba(201,164,106,0.3)" mb={5} position="relative">
+            <Box w="4px" h="4px" bg="brand.gold" borderRadius="full"
+              position="absolute" top="-1.5px" left="0" />
+          </Box>
+          <VStack align="start" spacing={3}>
+            {['FAQ', 'Políticas', 'Privacidade', 'Termos de Uso'].map(label => (
+              <Link key={label} href="#"
+                fontFamily="'Inter', sans-serif" fontSize="sm"
+                color="rgba(255,255,255,0.65)"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+              >
+                {label}
+              </Link>
+            ))}
+          </VStack>
+        </GridItem>
+
+        {/* Atendimento */}
+        <GridItem>
+          <Text
+            fontFamily="'Manrope', sans-serif"
+            fontSize="0.7rem" fontWeight="700"
+            letterSpacing="0.18em" textTransform="uppercase"
+            color="white" mb={3}
+          >
+            Atendimento
+          </Text>
+          <Box w="full" h="1px" bg="rgba(201,164,106,0.3)" mb={5} position="relative">
+            <Box w="4px" h="4px" bg="brand.gold" borderRadius="full"
+              position="absolute" top="-1.5px" left="0" />
+          </Box>
+          <VStack align="start" spacing={4}>
+            <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="rgba(255,255,255,0.65)">
+              Online e Presencial
+            </Text>
+
+            <HStack spacing={3}>
+              <Icon as={FaWhatsapp} boxSize={4} color="brand.gold" />
+              <Link href="tel:+5541987820288"
+                fontFamily="'Inter', sans-serif" fontSize="sm"
+                color="rgba(255,255,255,0.65)"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+              >
+                (41) 98782-0288
+              </Link>
+            </HStack>
+
+            <HStack spacing={3}>
+              <Icon as={FaInstagram} boxSize={4} color="brand.gold" />
+              <Link href="https://instagram.com/" isExternal
+                fontFamily="'Inter', sans-serif" fontSize="sm"
+                color="rgba(255,255,255,0.65)"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+              >
+                @geisacosta.psicanalista
+              </Link>
+            </HStack>
+
+            <HStack spacing={3}>
+              <Icon as={MdEmail} boxSize={4} color="brand.gold" />
+              <Link href="mailto:contato@geisacosta.com.br"
+                fontFamily="'Inter', sans-serif" fontSize="sm"
+                color="rgba(255,255,255,0.65)"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+              >
+                contato@geisacosta.com.br
+              </Link>
+            </HStack>
+
+            <HStack spacing={3}>
+              <Icon as={MdLocationOn} boxSize={4} color="brand.gold" />
+              <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="rgba(255,255,255,0.65)">
+                Joinville - SC
+              </Text>
+            </HStack>
+          </VStack>
+        </GridItem>
+
+        {/* Vamos Conversar CTA */}
+        <GridItem>
+          <Text
+            fontFamily="'Manrope', sans-serif"
+            fontSize="0.7rem" fontWeight="700"
+            letterSpacing="0.18em" textTransform="uppercase"
+            color="white" mb={3}
+          >
+            Vamos Conversar?
+          </Text>
+          <Box w="full" h="1px" bg="rgba(201,164,106,0.3)" mb={5} position="relative">
+            <Box w="4px" h="4px" bg="brand.gold" borderRadius="full"
+              position="absolute" top="-1.5px" left="0" />
+          </Box>
+          <Text
+            fontFamily="'Inter', sans-serif"
+            fontSize="sm"
+            color="rgba(255,255,255,0.65)"
+            lineHeight={1.8}
+            mb={6}
+          >
+            Dê o primeiro passo no seu processo de transformação.
+          </Text>
+          <Button
+            as={Link}
+            href="https://wa.me/5541987820288"
+            isExternal
+            variant="outline_fig"
+            borderColor="rgba(201,164,106,0.5)"
+            color="white"
+            fontSize="0.65rem"
+            px={6} py={3}
+            _hover={{ bg: 'rgba(201,164,106,0.15)', textDecoration: 'none' }}
+          >
+            Agendar Sua Conversa
+          </Button>
+        </GridItem>
+
       </Grid>
 
+      {/* Illustrated bottom — normal flow, not absolute */}
+      <Flex
+        w="100%"
+       justify={{ base: 'center', md: 'center' }}
+        pointerEvents="none"
+        mt={-4}
+      >
+        <img className='footer-designer'
+          src="/footer-designer.png"
+          alt=""
+          style={{
+            width: '80%',
+            height: 'auto',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            opacity: 0.55,
+            display: 'block',
+          }}
+        />
+      </Flex>
+
       {/* Bottom bar */}
-      <Box borderTop="1px solid" borderColor="rgba(255,255,255,0.08)">
+      <Box
+        borderTop="1px solid" borderColor="rgba(255,255,255,0.08)"
+        bg="brand.fig"
+      >
         <Flex
-          maxW="1160px" mx="auto"
-          px={{ base: 5, md: 10 }}
+          maxW="1440px" mx="auto"
+          px={{ base: 6, md: 14 }}
           py={5}
           justify={{ base: 'center', md: 'space-between' }}
           align="center"
           flexWrap="wrap"
           gap={3}
         >
-          <Text
-            fontFamily="'Inter', sans-serif"
-            fontSize="xs"
-            color="#fff"
-          >
-            © 2024 Geisa Costa. Todos os direitos reservados.
+          <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="rgba(255,255,255,0.3)">
+            © 2025 Geisa Costa. Todos os direitos reservados.
           </Text>
-          <HStack spacing={6}>
+          <HStack spacing={6} divider={<Box w="1px" h="12px" bg="rgba(255,255,255,0.15)" />}>
             {['Política de Privacidade', 'Termos de Uso'].map(label => (
-              <Link
-                key={label}
-                href="#"
-                fontFamily="'Inter', sans-serif"
-                fontSize="xs"
-                color="#fff"
+              <Link key={label} href="#"
+                fontFamily="'Inter', sans-serif" fontSize="xs"
+                color="rgba(255,255,255,0.3)"
                 _hover={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}
               >
                 {label}
@@ -159,6 +304,7 @@ export default function Footer() {
           </HStack>
         </Flex>
       </Box>
+
     </Box>
   )
 }

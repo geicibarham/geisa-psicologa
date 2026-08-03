@@ -3,32 +3,28 @@ import {
   IconButton, VStack, useDisclosure,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { Link as RouterLink } from 'react-router-dom'
 
 const NAV_LINKS = [
-  { label: 'Início',       href: '#hero' },
-  { label: 'Sobre',        href: '#about' },
-  { label: 'Atendimento',  href: '#atendimentos' },
-  { label: 'Abordagem',    href: '#abordagem' },
-  { label: 'FAQ',          href: '#faq' },
-  { label: 'Contato',      href: '#contato' },
+  { label: 'Início',      href: '#hero' },
+  { label: 'Sobre',       href: '#about' },
+  { label: 'Atendimento', href: '#atendimentos' },
+  { label: 'Abordagem',   href: '#abordagem' },
+  { label: 'FAQ',         href: '#faq' },
+  { label: 'Contato',     href: '/contato', isRoute: true },
 ]
 
-function Logo({ light }) {
-  const color      = light ? 'rgba(255,255,255,0.9)' : '#5E4B56'
-  const borderClr  = light ? 'rgba(201,164,106,0.6)' : '#C9A46A'
-  const textColor  = light ? 'rgba(255,255,255,0.95)' : '#4D3B45'
-  const subColor   = light ? 'rgba(255,255,255,0.5)'  : '#6F6468'
-
+function Logo() {
   return (
     <Flex as={Link} href="#hero" align="center" gap={3} _hover={{ textDecoration: 'none' }}>
       <Flex
         w="45px" h="45px"
-        border="1px solid" borderColor={borderClr}
+        border="1px solid" borderColor="#C9A46A"
         borderRadius="full"
         align="center" justify="center"
         fontFamily="'Cormorant Garamond', serif"
         fontSize="1.5rem"
-        color={color}
+        color="#5E4B56"
         flexShrink={0}
       >
         GC
@@ -37,14 +33,14 @@ function Logo({ light }) {
         <Text
           fontFamily="'Manrope', sans-serif"
           fontSize="0.72rem" fontWeight="600"
-          letterSpacing="0.12em" color={textColor}
+          letterSpacing="0.12em" color="#4D3B45"
         >
           GEISA COSTA
         </Text>
         <Text
           fontFamily="'Manrope', sans-serif"
           fontSize="0.5rem" letterSpacing="0.18em"
-          textTransform="uppercase" color={subColor}
+          textTransform="uppercase" color="#6F6468"
         >
           Psicanalista
         </Text>
@@ -68,7 +64,7 @@ export default function Navbar() {
         borderColor="rgba(216,197,175,0.4)"
       >
         <Flex
-         maxW="1600px" mx="auto"
+          maxW="1600px" mx="auto"
           px={{ base: 5, md: 10 }}
           h="68px"
           align="center"
@@ -78,10 +74,12 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <HStack spacing={8} display={{ base: 'none', lg: 'flex' }}>
-            {NAV_LINKS.map(({ label, href }) => (
+            {NAV_LINKS.map(({ label, href, isRoute }) => (
               <Link
                 key={href}
-                href={href}
+                as={isRoute ? RouterLink : undefined}
+                to={isRoute ? href : undefined}
+                href={!isRoute ? href : undefined}
                 fontFamily="'Manrope', sans-serif"
                 fontSize="0.85rem"
                 fontWeight="700"
@@ -132,7 +130,7 @@ export default function Navbar() {
             transition="opacity 0.35s"
           />
 
-          {/* Drawer panel — slides from right */}
+          {/* Drawer panel */}
           <Box
             position="relative" zIndex={1}
             w={{ base: '82%', sm: '72%' }}
@@ -167,10 +165,12 @@ export default function Navbar() {
 
             {/* Nav links */}
             <VStack align="start" spacing={0} flex={1}>
-              {NAV_LINKS.map(({ label, href }, i) => (
+              {NAV_LINKS.map(({ label, href, isRoute }, i) => (
                 <Link
                   key={href}
-                  href={href}
+                  as={isRoute ? RouterLink : undefined}
+                  to={isRoute ? href : undefined}
+                  href={!isRoute ? href : undefined}
                   onClick={onClose}
                   display="block"
                   w="full"
@@ -210,10 +210,8 @@ export default function Navbar() {
                 Agendar Consulta
               </Button>
 
-              {/* Gold line accent */}
               <Box
-                mt={8}
-                h="1px"
+                mt={8} h="1px"
                 bg="linear-gradient(90deg, transparent, #C9A46A, transparent)"
                 opacity={0.5}
               />
