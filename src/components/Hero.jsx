@@ -143,6 +143,16 @@ export default function Hero() {
               pointerEvents="none"
             />
 
+                {/* Fade TOP (Mobile Only) */}
+            <Box
+              position="absolute"
+              top={0} left={0}
+              w="100%" h={{ base: '25%', md: '0%' }}
+              display={{ base: 'block', md: 'none' }}
+              bg="linear-gradient(to bottom, #F6F1EE 0%, transparent 100%)"
+              pointerEvents="none"
+            />
+
             {/* Fade BOTTOM */}
             <Box
               position="absolute"
@@ -158,6 +168,7 @@ export default function Hero() {
               position="absolute"
               top={0} right={0}
               w="45%" h="100%"
+              w={{ base: '12%', md: '45%' }}
               bg="linear-gradient(to left, #F6F1EE 0%, transparent 100%)"
               pointerEvents="none"
             />
