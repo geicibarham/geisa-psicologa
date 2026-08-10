@@ -21,7 +21,7 @@ export default function About() {
         {/* Photo */}
         <GridItem>
           <Box w="full" position="relative" overflow="hidden">
-            <Image src={aboutMe} alt="Geisa Costa" w="full" h="full" objectFit="cover" />
+            <Image src={aboutMe} alt="Geisa Costa psi" w="full" h="full" objectFit="cover" />
           </Box>
         </GridItem>
 

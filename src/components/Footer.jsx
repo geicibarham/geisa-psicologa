@@ -43,7 +43,7 @@ export default function Footer() {
                 fontFamily="'Manrope', sans-serif"
                 fontSize="0.8rem" fontWeight="600"
                 letterSpacing="0.14em"
-                color="rgba(255,255,255,0.9)"
+                color="#fff"
               >
                 GEISA COSTA
               </Text>
@@ -51,7 +51,7 @@ export default function Footer() {
                 fontFamily="'Manrope', sans-serif"
                 fontSize="0.55rem" letterSpacing="0.2em"
                 textTransform="uppercase"
-                color="rgba(255,255,255,0.5)"
+                color="#fff"
               >
                 Psicanalista
               </Text>
@@ -63,7 +63,7 @@ export default function Footer() {
             fontSize="1.1rem"
             fontWeight={300}
             fontStyle="italic"
-            color="rgba(255,255,255,0.7)"
+            color="#fff"
             lineHeight={1.6}
             mb={6}
             maxW="22ch"
@@ -76,7 +76,7 @@ export default function Footer() {
             href="https://wa.me/5541987820288"
             isExternal
             variant="outline_fig"
-            borderColor="rgba(255,255,255,0.35)"
+            borderColor="#fff"
             color="white"
             fontSize="0.65rem"
             px={6} py={3}
@@ -91,7 +91,7 @@ export default function Footer() {
             fontSize="0.58rem"
             letterSpacing="0.14em"
             textTransform="uppercase"
-            color="rgba(255,255,255,0.35)"
+            color="#fff"
             mt={3}
           >
             Atendimento Online e Presencial
@@ -116,7 +116,7 @@ export default function Footer() {
             {['Início', 'Sobre', 'Atendimentos', 'Abordagem'].map(label => (
               <Link key={label} href={`#${label.toLowerCase()}`}
                 fontFamily="'Inter', sans-serif" fontSize="sm"
-                color="rgba(255,255,255,0.65)"
+                color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
                 {label}
@@ -143,7 +143,7 @@ export default function Footer() {
             {['FAQ', 'Políticas', 'Privacidade', 'Termos de Uso'].map(label => (
               <Link key={label} href="#"
                 fontFamily="'Inter', sans-serif" fontSize="sm"
-                color="rgba(255,255,255,0.65)"
+                color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
                 {label}
@@ -167,7 +167,7 @@ export default function Footer() {
               position="absolute" top="-1.5px" left="0" />
           </Box>
           <VStack align="start" spacing={4}>
-            <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="rgba(255,255,255,0.65)">
+            <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="#fff">
               Online e Presencial
             </Text>
 
@@ -175,7 +175,7 @@ export default function Footer() {
               <Icon as={FaWhatsapp} boxSize={4} color="brand.gold" />
               <Link href="tel:+5541987820288"
                 fontFamily="'Inter', sans-serif" fontSize="sm"
-                color="rgba(255,255,255,0.65)"
+                color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
                 (41) 98782-0288
@@ -186,7 +186,7 @@ export default function Footer() {
               <Icon as={FaInstagram} boxSize={4} color="brand.gold" />
               <Link href="https://instagram.com/" isExternal
                 fontFamily="'Inter', sans-serif" fontSize="sm"
-                color="rgba(255,255,255,0.65)"
+                color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
                 @geisacosta.psicanalista
@@ -197,7 +197,7 @@ export default function Footer() {
               <Icon as={MdEmail} boxSize={4} color="brand.gold" />
               <Link href="mailto:contato@geisacosta.com.br"
                 fontFamily="'Inter', sans-serif" fontSize="sm"
-                color="rgba(255,255,255,0.65)"
+                color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
                 contato@geisacosta.com.br
@@ -206,7 +206,7 @@ export default function Footer() {
 
             <HStack spacing={3}>
               <Icon as={MdLocationOn} boxSize={4} color="brand.gold" />
-              <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="rgba(255,255,255,0.65)">
+              <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="#fff">
                 Joinville - SC
               </Text>
             </HStack>
@@ -230,7 +230,7 @@ export default function Footer() {
           <Text
             fontFamily="'Inter', sans-serif"
             fontSize="sm"
-            color="rgba(255,255,255,0.65)"
+            color="#fff"
             lineHeight={1.8}
             mb={6}
           >
@@ -288,15 +288,15 @@ export default function Footer() {
           flexWrap="wrap"
           gap={3}
         >
-          <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="rgba(255,255,255,0.3)">
+          <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="#fff">
             © 2025 Geisa Costa. Todos os direitos reservados.
           </Text>
-          <HStack spacing={6} divider={<Box w="1px" h="12px" bg="rgba(255,255,255,0.15)" />}>
+          <HStack spacing={6} divider={<Box w="1px" h="12px" bg="#fff" />}>
             {['Política de Privacidade', 'Termos de Uso'].map(label => (
               <Link key={label} href="#"
                 fontFamily="'Inter', sans-serif" fontSize="xs"
-                color="rgba(255,255,255,0.3)"
-                _hover={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}
+                color="#fff"
+                _hover={{ color: '#fff', textDecoration: 'none' }}
               >
                 {label}
               </Link>

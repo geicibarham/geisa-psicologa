@@ -8,15 +8,15 @@ import { Link as RouterLink } from 'react-router-dom'
 const NAV_LINKS = [
   { label: 'Início',      href: '#hero' },
   { label: 'Sobre',       href: '#about' },
-  { label: 'Atendimento', href: '#atendimentos' },
-  { label: 'Abordagem',   href: '#abordagem' },
+  { label: 'Atendimento', href: '/atendimento', isRoute: true },
   { label: 'FAQ',         href: '#faq' },
-  { label: 'Contato',     href: '/contato', isRoute: true },
+  { label: 'Contato',     href: '/contato',     isRoute: true },
+  { label: 'Psicanálise', href: '/psicanalise', isRoute: true },
 ]
 
 function Logo() {
   return (
-    <Flex as={Link} href="#hero" align="center" gap={3} _hover={{ textDecoration: 'none' }}>
+    <Flex as={Link} href="/" align="center" gap={3} _hover={{ textDecoration: 'none' }}>
       <Flex
         w="45px" h="45px"
         border="1px solid" borderColor="#C9A46A"
