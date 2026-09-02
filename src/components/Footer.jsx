@@ -261,14 +261,13 @@ export default function Footer() {
         mt={-4}
       >
         <img className='footer-designer'
-          src="/footer-designer.png"
+          src="/footer.png"
           alt=""
           style={{
             width: '80%',
             height: 'auto',
             objectFit: 'cover',
             objectPosition: 'center top',
-            opacity: 0.55,
             display: 'block',
           }}
         />

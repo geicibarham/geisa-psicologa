@@ -3,20 +3,23 @@ import {
   IconButton, VStack, useDisclosure,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 
 const NAV_LINKS = [
-  { label: 'Início',      href: '#hero' },
-  { label: 'Sobre',       href: '#about' },
-  { label: 'Atendimento', href: '/atendimento', isRoute: true },
-  { label: 'FAQ',         href: '#faq' },
-  { label: 'Contato',     href: '/contato',     isRoute: true },
-  { label: 'Psicanálise', href: '/psicanalise', isRoute: true },
+  { label: 'Início',       href: '/#hero' },
+  { label: 'Sobre',        href: '/#about' },
+  { label: 'Atendimento',  href: '/atendimento', isRoute: true },
+  { label: 'FAQ',          href: '/#faq' },
+  { label: 'Contato',      href: '/contato',     isRoute: true },
+  { label: 'Psicanálise',  href: '/psicanalise', isRoute: true },
 ]
+
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex="0"]'
 
 function Logo() {
   return (
-    <Flex as={Link} href="/" align="center" gap={3} _hover={{ textDecoration: 'none' }}>
+    <Flex as={RouterLink} to="/" align="center" gap={3} _hover={{ textDecoration: 'none' }}>
       <Flex
         w="45px" h="45px"
         border="1px solid" borderColor="#C9A46A"
@@ -51,12 +54,87 @@ function Logo() {
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const navigate      = useNavigate()
+  const location      = useLocation()
+  const drawerRef     = useRef(null)
+  const hamburgerRef  = useRef(null)
+  const closeButtonRef = useRef(null)
+
+  const handleNavClick = (e, href, isRoute) => {
+    if (isRoute) {
+      navigate(href)
+      return
+    }
+
+    e.preventDefault()
+    const targetId = href.replace('/#', '')
+
+    if (location.pathname === '/') {
+      // Already on home: scroll directly
+      const el = document.getElementById(targetId)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+        el.setAttribute('tabindex', '-1')
+        el.focus({ preventScroll: true })
+      }
+    } else {
+      // On another page: navigate to / with the hash
+      navigate(href)
+    }
+  }
+
+  // ESC key closes drawer
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (!isOpen) return
+
+      if (e.key === 'Escape') {
+        onClose()
+        hamburgerRef.current?.focus()
+        return
+      }
+
+      if (e.key === 'Tab') {
+        const drawer = drawerRef.current
+        if (!drawer) return
+        const focusable = Array.from(drawer.querySelectorAll(FOCUSABLE))
+        const first = focusable[0]
+        const last  = focusable[focusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault()
+            last.focus()
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault()
+            first.focus()
+          }
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => closeButtonRef.current?.focus(), 50)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
 
   return (
     <>
-      {/* ── Sticky bar ── */}
       <Box
         as="nav"
+        aria-label="Navegação principal"
         position="sticky" top={0} zIndex={100}
         bg="#f6f1ed"
         backdropFilter="blur(12px)"
@@ -73,23 +151,28 @@ export default function Navbar() {
           <Logo />
 
           {/* Desktop links */}
-          <HStack spacing={8} display={{ base: 'none', lg: 'flex' }}>
+          <HStack
+            as="ul"
+            spacing={8}
+            display={{ base: 'none', lg: 'flex' }}
+            listStyleType="none"
+          >
             {NAV_LINKS.map(({ label, href, isRoute }) => (
-              <Link
-                key={href}
-                as={isRoute ? RouterLink : undefined}
-                to={isRoute ? href : undefined}
-                href={!isRoute ? href : undefined}
-                fontFamily="'Manrope', sans-serif"
-                fontSize="0.85rem"
-                fontWeight="700"
-                letterSpacing="0.1em"
-                textTransform="uppercase"
-                color="brand.muted"
-                _hover={{ color: 'brand.fig', textDecoration: 'none' }}
-              >
-                {label}
-              </Link>
+              <Box as="li" key={href}>
+                <Link
+                  href={href}
+                  onClick={(e) => handleNavClick(e, href, isRoute)}
+                  fontFamily="'Manrope', sans-serif"
+                  fontSize="0.85rem"
+                  fontWeight="700"
+                  letterSpacing="0.1em"
+                  textTransform="uppercase"
+                  color="brand.muted"
+                  _hover={{ color: 'brand.fig', textDecoration: 'none' }}
+                >
+                  {label}
+                </Link>
+              </Box>
             ))}
           </HStack>
 
@@ -104,7 +187,10 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <IconButton
-            aria-label="Abrir menu"
+            ref={hamburgerRef}
+            aria-label="Abrir menu de navegação"
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav-drawer"
             icon={<HamburgerIcon boxSize={5} />}
             variant="ghost"
             color="brand.fig"
@@ -115,23 +201,26 @@ export default function Navbar() {
         </Flex>
       </Box>
 
-      {/* ── Mobile overlay + half-width drawer ── */}
+      {/* Mobile drawer */}
       {isOpen && (
         <Box
           position="fixed" inset={0} zIndex={200}
           display="flex" justifyContent="flex-end"
         >
-          {/* Blurred backdrop */}
           <Box
             position="absolute" inset={0}
             bg="rgba(246,241,238,0.55)"
             backdropFilter="blur(6px)"
             onClick={onClose}
-            transition="opacity 0.35s"
+            aria-hidden="true"
           />
 
-          {/* Drawer panel */}
           <Box
+            ref={drawerRef}
+            id="mobile-nav-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu de navegação"
             position="relative" zIndex={1}
             w={{ base: '82%', sm: '72%' }}
             maxW="400px"
@@ -150,54 +239,64 @@ export default function Navbar() {
               },
             }}
           >
-            {/* Close + Logo row */}
             <Flex justify="space-between" align="center" mb={12}>
               <Logo />
               <IconButton
-                aria-label="Fechar menu"
+                ref={closeButtonRef}
+                aria-label="Fechar menu de navegação"
                 icon={<CloseIcon boxSize={3} />}
                 variant="ghost"
                 color="brand.muted"
-                onClick={onClose}
+                onClick={() => {
+                  onClose()
+                  hamburgerRef.current?.focus()
+                }}
                 _hover={{ bg: 'transparent', color: 'brand.fig' }}
               />
             </Flex>
 
-            {/* Nav links */}
-            <VStack align="start" spacing={0} flex={1}>
+            <VStack
+              as="ul"
+              align="start"
+              spacing={0}
+              flex={1}
+              listStyleType="none"
+            >
               {NAV_LINKS.map(({ label, href, isRoute }, i) => (
-                <Link
-                  key={href}
-                  as={isRoute ? RouterLink : undefined}
-                  to={isRoute ? href : undefined}
-                  href={!isRoute ? href : undefined}
-                  onClick={onClose}
-                  display="block"
-                  w="full"
-                  py={5}
-                  borderBottom="1px solid"
-                  borderColor="rgba(94,75,86,0.1)"
-                  fontFamily="'Cormorant Garamond', serif"
-                  fontSize="1.5rem"
-                  fontWeight="400"
-                  color="brand.text"
-                  letterSpacing="0.04em"
-                  _hover={{ color: 'brand.fig', textDecoration: 'none', pl: 2 }}
-                  transition="all 0.2s"
-                  sx={{
-                    animation: `fadeUp 0.4s ${0.06 * i + 0.15}s both`,
-                    '@keyframes fadeUp': {
-                      from: { opacity: 0, transform: 'translateY(10px)' },
-                      to:   { opacity: 1, transform: 'translateY(0)' },
-                    },
-                  }}
-                >
-                  {label}
-                </Link>
+                <Box as="li" key={href} w="full">
+                  <Link
+                    href={href}
+                    onClick={(e) => {
+                      handleNavClick(e, href, isRoute)
+                      onClose()
+                      hamburgerRef.current?.focus()
+                    }}
+                    display="block"
+                    w="full"
+                    py={5}
+                    borderBottom="1px solid"
+                    borderColor="rgba(94,75,86,0.1)"
+                    fontFamily="'Cormorant Garamond', serif"
+                    fontSize="1.5rem"
+                    fontWeight="400"
+                    color="brand.text"
+                    letterSpacing="0.04em"
+                    _hover={{ color: 'brand.fig', textDecoration: 'none', pl: 2 }}
+                    transition="all 0.2s"
+                    sx={{
+                      animation: `fadeUp 0.4s ${0.06 * i + 0.15}s both`,
+                      '@keyframes fadeUp': {
+                        from: { opacity: 0, transform: 'translateY(10px)' },
+                        to:   { opacity: 1, transform: 'translateY(0)' },
+                      },
+                    }}
+                  >
+                    {label}
+                  </Link>
+                </Box>
               ))}
             </VStack>
 
-            {/* Bottom CTA */}
             <Box mt={10}>
               <Button
                 as={Link}
@@ -205,7 +304,10 @@ export default function Navbar() {
                 isExternal
                 variant="primary"
                 w="full"
-                onClick={onClose}
+                onClick={() => {
+                  onClose()
+                  hamburgerRef.current?.focus()
+                }}
               >
                 Agendar Consulta
               </Button>
