@@ -2,7 +2,7 @@ import {
   Box, Grid, GridItem, Heading, Text, Button, Link,
   Flex, VStack, HStack, Icon,
 } from '@chakra-ui/react'
-import heroImg from '../../public/psicanalise.jpg'
+// import heroImg from '../../public/psicanalise.jpg'
 import { LuBrain, LuFlower, LuUser, LuHeart, LuSun } from 'react-icons/lu'
 import { FaQuoteLeft } from 'react-icons/fa'
 
@@ -85,7 +85,7 @@ export default function Psicanalise() {
           >
             <Box position="absolute" inset={0} overflow="hidden">
               <img
-                src={heroImg}
+               src="/psicanalise.jpg"
                 alt="Geisa Costa"
                 style={{
                   width: '100%',
