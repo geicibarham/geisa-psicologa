@@ -108,7 +108,8 @@ export default function Atendimento() {
           <GridItem
             display={{ base: 'flex', md: 'flex' }}
             alignSelf="stretch" alignItems="center" justifyContent="center"
-            position="relative" minH="calc(100vh - 68px)"
+            position="relative"
+            minH={{ base: 'calc(70vh - 68px)', md: 'calc(100vh - 68px)' }}
           >
             <Box position="absolute" inset={0} overflow="hidden">
               <img
