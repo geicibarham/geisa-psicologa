@@ -10,7 +10,6 @@ import {
 } from 'react-icons/md'
 import { BsChatSquareText } from 'react-icons/bs'
 import { LuLeaf } from 'react-icons/lu'
-// import leaves from '../../dist/contact-plant.png'
 
 const FEATURES = [
   { icon: BsChatSquareText, label: 'Escuta atenta e sigilosa' },
@@ -239,7 +238,7 @@ export default function Contact() {
           pointerEvents="none" zIndex={0}
         >
           <img
-            src="/leaves.png" alt=""
+            src="/contact-plant.png" alt=""
             style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center left', display: 'block' }}
           />
         </Box>
