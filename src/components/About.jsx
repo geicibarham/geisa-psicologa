@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Box, Grid, GridItem, Heading, Text, Button, Image, Collapse } from '@chakra-ui/react';
-import aboutMe from '../../public/SOBREMIM.jpg';
-import folhagem from '../../public/folhagem.png';
 
 export default function About() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -21,7 +19,7 @@ export default function About() {
         {/* Photo */}
         <GridItem>
           <Box w="full" position="relative" overflow="hidden">
-            <Image src={aboutMe} alt="Geisa Costa psi" w="full" h="full" objectFit="cover" />
+            <Image src="/SOBREMIM.jpg" alt="Geisa Costa psi" w="full" h="full" objectFit="cover" />
           </Box>
         </GridItem>
 
@@ -113,7 +111,7 @@ export default function About() {
 
         {/* Folhagem */}
         <GridItem display={{ base: 'none', md: 'flex' }} justifyContent="center" alignItems="center">
-          <Image src={folhagem} alt="" w="full" h="full" objectFit="cover" />
+          <Image src="/folhagem.png" alt="" w="full" h="full" objectFit="cover" />
         </GridItem>
       </Grid>
     </Box>

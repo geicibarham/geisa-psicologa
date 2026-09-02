@@ -1,12 +1,26 @@
 import {
   Box, Flex, Grid, GridItem, Text, Link, HStack, VStack, Icon, Button,
 } from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom'
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
 import { MdEmail, MdLocationOn } from 'react-icons/md'
 
+const NAV_LINKS = [
+  { label: 'Início', href: '/#hero' },
+  { label: 'Sobre', href: '/#about' },
+  { label: 'Atendimentos', href: '/atendimento' },
+]
+
+const INFO_LINKS = [
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Políticas', href: '#' },
+  { label: 'Privacidade', href: '#' },
+  { label: 'Termos de Uso', href: '#' },
+]
+
 export default function Footer() {
   return (
-    <Box id="abordagem" as="footer" bg="brand.fig" position="relative">
+    <Box as="footer" bg="brand.fig" position="relative">
 
       {/* Gold top line */}
       <Box
@@ -113,8 +127,11 @@ export default function Footer() {
               position="absolute" top="-1.5px" left="0" />
           </Box>
           <VStack align="start" spacing={3}>
-            {['Início', 'Sobre', 'Atendimentos', 'Abordagem'].map(label => (
-              <Link key={label} href={`#${label.toLowerCase()}`}
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                as={RouterLink}
+                to={href}
                 fontFamily="'Inter', sans-serif" fontSize="sm"
                 color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
@@ -140,8 +157,12 @@ export default function Footer() {
               position="absolute" top="-1.5px" left="0" />
           </Box>
           <VStack align="start" spacing={3}>
-            {['FAQ', 'Políticas', 'Privacidade', 'Termos de Uso'].map(label => (
-              <Link key={label} href="#"
+            {INFO_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                as={href.startsWith('/') ? RouterLink : undefined}
+                to={href.startsWith('/') ? href : undefined}
+                href={href.startsWith('/') ? undefined : href}
                 fontFamily="'Inter', sans-serif" fontSize="sm"
                 color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}

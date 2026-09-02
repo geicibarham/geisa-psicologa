@@ -1,5 +1,4 @@
 import { Box, Heading, Text, Button, Link, Grid, GridItem } from '@chakra-ui/react';
-import heroImg from '../../public/home-hero.jpg';
 
 export default function Hero() {
   return (
@@ -119,7 +118,7 @@ export default function Hero() {
         >
           <Box position="absolute" inset={0} overflow="hidden">
             <img
-              src={heroImg}
+              src="/home-hero.jpg"
               alt="Geisa Costa"
               style={{
                 width: '100%',

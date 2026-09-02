@@ -2,7 +2,6 @@ import {
   Box, Grid, GridItem, Heading, Text, Button, Link,
   Flex, VStack, HStack, Icon,
 } from '@chakra-ui/react'
-// import heroImg from '../../public/psicanalise.jpg'
 import { LuBrain, LuFlower, LuUser, LuHeart, LuSun } from 'react-icons/lu'
 import { FaQuoteLeft } from 'react-icons/fa'
 
@@ -76,51 +75,53 @@ export default function Psicanalise() {
 
           {/* Photo with blend */}
           <GridItem
-            display={{ base: 'flex', md: 'flex' }}
+            display="flex"
             alignSelf="stretch"
             alignItems="center"
             justifyContent="center"
             position="relative"
-            minH="calc(100vh - 68px)"
+            minH={{ base: '70vh', md: 'calc(100vh - 68px)' }}
+            mx={{ base: -5, md: 0 }}
           >
             <Box position="absolute" inset={0} overflow="hidden">
-              <img
-               src="/psicanalise.jpg"
+              <Box
+                as="img"
+                src="/psicanalise.jpg"
                 alt="Geisa Costa"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'top center',
-                  display: 'block',
-                }}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+                objectPosition={{ base: 'center 22%', md: 'top center' }}
+                transform={{ base: 'scale(1.25)', md: 'none' }}
+                transformOrigin="center center"
+                display="block"
               />
-              {/* Fade LEFT */}
+              {/* Fade LEFT — into the text column */}
               <Box
                 position="absolute" top={0} left={0}
-                w="40%" h="100%"
-                bg="linear-gradient(to right, #F6F1EE 15%, transparent 100%)"
+                w={{ base: '12%', md: '28%' }} h="100%"
+                bg="linear-gradient(to right, #F6F1EE 0%, transparent 100%)"
                 pointerEvents="none"
               />
-              {/* Fade BOTTOM */}
+              {/* Fade TOP */}
+              <Box
+                position="absolute" top={0} left={0}
+                w="100%" h={{ base: '12%', md: '8%' }}
+                bg="linear-gradient(to bottom, #F6F1EE 0%, transparent 100%)"
+                pointerEvents="none"
+              />
+              {/* Fade BOTTOM — keep short so hands stay visible */}
               <Box
                 position="absolute" bottom={0} left={0}
-                w="100%" h="20%"
+                w="100%" h="8%"
                 bg="linear-gradient(to top, #F6F1EE 0%, transparent 100%)"
                 pointerEvents="none"
               />
               {/* Fade RIGHT */}
               <Box
                 position="absolute" top={0} right={0}
-                w="20%" h="100%"
+                w={{ base: '10%', md: '14%' }} h="100%"
                 bg="linear-gradient(to left, #F6F1EE 0%, transparent 100%)"
-                pointerEvents="none"
-              />
-              {/* Fade TOP */}
-              <Box
-                position="absolute" top={0} left={0}
-                w="100%" h="10%"
-                bg="linear-gradient(to bottom, #F6F1EE 0%, transparent 100%)"
                 pointerEvents="none"
               />
             </Box>
@@ -217,7 +218,7 @@ export default function Psicanalise() {
               position="relative"
             >
               <img
-                src={heroImg}
+                src="/psicanalise.jpg"
                 alt="Geisa Costa"
                 style={{
                   width: '100%',

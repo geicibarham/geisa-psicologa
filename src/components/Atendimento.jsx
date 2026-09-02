@@ -3,7 +3,6 @@ import {
   Flex, VStack, HStack, Icon, Accordion, AccordionItem,
   AccordionButton, AccordionPanel, AccordionIcon,
 } from '@chakra-ui/react'
-import heroImg from '../../public/home-hero.jpg'
 import {
   MdComputer, MdChair, MdCheck, MdLock, MdPhone,
 } from 'react-icons/md'
@@ -113,7 +112,7 @@ export default function Atendimento() {
           >
             <Box position="absolute" inset={0} overflow="hidden">
               <img
-                src={heroImg} alt="Geisa Costa psicologa"
+                src="/home-hero.jpg" alt="Geisa Costa psicologa"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
               />
               <Box position="absolute" top={0} left={0} w="35%" h="100%"
