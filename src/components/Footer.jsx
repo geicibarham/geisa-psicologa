@@ -210,18 +210,18 @@ export default function Footer() {
                 color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
-                @geisacosta.psicanalista
+                @psi.geisacosta
               </Link>
             </HStack>
 
             <HStack spacing={3}>
               <Icon as={MdEmail} boxSize={4} color="brand.gold" />
-              <Link href="mailto:contato@geisacosta.com.br"
+              <Link href="mailto:geisacosta.psicanalista@outlook.com"
                 fontFamily="'Inter', sans-serif" fontSize="sm"
                 color="#fff"
                 _hover={{ color: 'white', textDecoration: 'none' }}
               >
-                contato@geisacosta.com.br
+                geisacosta.psicanalista@outlook.com
               </Link>
             </HStack>
 

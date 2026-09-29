@@ -231,10 +231,13 @@ export default function Contact() {
         {/* Vase */}
         <Box
           position="absolute"
-          left={0} top="50%"
-          transform="translateY(-50%)"
-          w={{ base: '280px', md: '550px' }}
-          h={{ base: '400px', md: '750px' }}
+          left={{ base: 0, md: '-40px', lg: '33%', '2xl': 0 }}
+          top={{ base: '50%', lg: 'auto', '2xl': '50%' }}
+          bottom={{ base: 'auto', lg: '40px', '2xl': 'auto' }}
+          transform={{ base: 'translateY(-50%)', lg: 'none', '2xl': 'translateY(-50%)' }}
+          w={{ base: '280px', md: '340px', lg: '210px', xl: '240px', '2xl': '550px' }}
+          h={{ base: '400px', md: '470px', lg: '420px', xl: '480px', '2xl': '750px' }}
+          opacity={{ base: 1, md: 0.85, lg: 1 }}
           pointerEvents="none" zIndex={0}
         >
           <img
@@ -264,10 +267,10 @@ export default function Contact() {
 
         <Grid
           maxW="1400px" mx="auto"
-          px={{ base: 5, md: 12 }}
+          px={{ base: 5, md: 12, lg: 6, xl: 12 }}
           py={{ base: 16, md: 20 }}
           templateColumns={{ base: '1fr', lg: '1fr 1fr' }}
-          gap={12} alignItems="center"
+          gap={{ base: 12, lg: 8, xl: 12 }} alignItems="center"
           position="relative" zIndex={1}
         >
 
@@ -476,7 +479,7 @@ export default function Contact() {
                 Psicóloga | Psicanalista
               </Text>
               <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="brand.muted">
-                CRP 06/000000
+                08/20775
               </Text>
             </Box>
           </HStack>
@@ -484,7 +487,7 @@ export default function Contact() {
           {[
             { icon: FaWhatsapp,  href: 'https://wa.me/5541987820288',      label: 'Fale pelo WhatsApp',     sub: '(41) 98782-0288' },
             { icon: FaInstagram, href: 'https://instagram.com/',           label: 'Acompanhe no Instagram', sub: '@psi.geisacosta' },
-            { icon: FaEnvelope,  href: 'mailto:contato@geisacosta.com.br', label: 'Ou envie um e-mail',     sub: 'contato@geisacosta.com.br' },
+            { icon: FaEnvelope,  href: 'mailto:geisacosta.psicanalista@outlook.com', label: 'Ou envie um e-mail',     sub: 'geisacosta.psicanalista@outlook.com' },
           ].map(({ icon, href, label, sub }) => (
             <HStack
               key={label} spacing={3}

@@ -113,10 +113,10 @@ export default function Atendimento() {
           >
             <Box position="absolute" inset={0} overflow="hidden">
               <img
-                src="/home-hero.jpg" alt="Geisa Costa psicologa"
+                src="/ATENDIMENTO-OFICIAL.jpg" alt="Geisa Costa psicologa"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
               />
-              <Box position="absolute" top={0} left={0} w="35%" h="100%"
+              <Box position="absolute" top={0} left={0} w="22%" h="100%"
                 bg="linear-gradient(to right, #F6F1EE 10%, transparent 100%)" pointerEvents="none" />
               <Box position="absolute" bottom={0} left={0} w="100%" h="15%"
                 bg="linear-gradient(to top, #F6F1EE 0%, transparent 100%)" pointerEvents="none" />
