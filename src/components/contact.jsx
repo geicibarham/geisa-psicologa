@@ -17,7 +17,7 @@ const FEATURES = [
   { icon: LuLeaf,           label: 'Atendimento ético e personalizado' },
 ]
 
-function FloatingInput({ label, type = 'text', icon }) {
+function FloatingInput({ label, name, type = 'text', icon }) {
   const [focused, setFocused] = useState(false)
   const [value, setValue] = useState('')
   const isFloating = focused || value.length > 0
@@ -57,10 +57,11 @@ function FloatingInput({ label, type = 'text', icon }) {
       <Box
         as="input"
         id={id}
-        name={id}
+        name={name || id}
         type={type}
         value={value}
         aria-label={label}
+        required
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -88,7 +89,7 @@ function FloatingInput({ label, type = 'text', icon }) {
   )
 }
 
-function FloatingSelect({ label, icon, children }) {
+function FloatingSelect({ label, name, icon, children }) {
   const [focused, setFocused] = useState(false)
   const [value, setValue] = useState('')
   const isFloating = focused || value.length > 0
@@ -128,9 +129,10 @@ function FloatingSelect({ label, icon, children }) {
       <Box
         as="select"
         id={id}
-        name={id}
+        name={name || id}
         aria-label={label}
         value={value}
+        required
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -157,7 +159,7 @@ function FloatingSelect({ label, icon, children }) {
   )
 }
 
-function FloatingTextarea({ label }) {
+function FloatingTextarea({ label, name }) {
   const [focused, setFocused] = useState(false)
   const [value, setValue] = useState('')
   const isFloating = focused || value.length > 0
@@ -193,9 +195,10 @@ function FloatingTextarea({ label }) {
       <Box
         as="textarea"
         id={id}
-        name={id}
+        name={name || id}
         aria-label={label}
         value={value}
+        required
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -222,6 +225,35 @@ function FloatingTextarea({ label }) {
 
 export default function Contact() {
   const [checked, setChecked] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsSubmitting(true)
+  const formData = new FormData(e.target)
+  formData.append('access_key', '555dc029-4e84-4953-be63-200fed9ee0ea')
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await response.json()
+    if (data.success) {
+      setSubmitted(true)
+    } else {
+      alert('Ocorreu um erro ao enviar. Tente novamente mais tarde.')
+    }
+  } catch {
+    alert('Erro de conexão. Verifique sua rede e tente novamente.')
+  } finally {
+    setIsSubmitting(false)
+  }
+}
 
   return (
     <Box bg="brand.bg" minH="100vh">
@@ -335,13 +367,13 @@ export default function Contact() {
           <GridItem>
             <Box
               as="form"
+              onSubmit={handleSubmit}
               bg="rgba(255,255,255,0.75)"
               backdropFilter="blur(12px)"
               borderRadius="20px"
               p={{ base: 7, md: 10 }}
               boxShadow="0px 8px 48px rgba(94,75,86,0.08)"
               border="1px solid" borderColor="rgba(255,255,255,0.6)"
-              noValidate
             >
               <Flex justify="space-between" align="flex-start" mb={6}>
                 <Box>
@@ -365,87 +397,92 @@ export default function Contact() {
                 </HStack>
               </Flex>
 
-              <VStack spacing={4}>
-
-                {/* Row 1 */}
-                <Grid templateColumns={{ base: '1fr', sm: '1fr 1fr' }} gap={4} w="full">
-                  <FloatingInput label="Seu nome"   icon={MdPerson} />
-                  <FloatingInput label="Seu e-mail" icon={MdEmail}  type="email" />
-                </Grid>
-
-                {/* Row 2 */}
-                <Grid templateColumns={{ base: '1fr', sm: '1fr 1fr' }} gap={4} w="full">
-                  <FloatingInput label="Seu WhatsApp" icon={FaWhatsapp} />
-                  <FloatingSelect label="Modalidade de atendimento" icon={MdCalendarToday}>
-                    <option value="online">Online</option>
-                    <option value="presencial">Presencial</option>
-                    <option value="ambos">Ambos</option>
-                  </FloatingSelect>
-                </Grid>
-
-                {/* Textarea */}
-                <Box w="full">
-                  <FloatingTextarea label="Como posso ajudar" />
-                </Box>
-
-                {/* Checkbox */}
-                <HStack w="full" spacing={3}>
-              <Checkbox
-  id="consent"
-  isChecked={checked}
-  onChange={(e) => setChecked(e.target.checked)}
-  borderColor="rgba(94,75,86,0.3)"
-  sx={{
-    '& .chakra-checkbox__control[data-checked]': {
-      bg: 'brand.fig', borderColor: 'brand.fig',
-    }
-  }}
->
-  <Text
-    fontFamily="'Inter', sans-serif"
-    fontSize="sm"
-    color="brand.muted"
-  >
-    Autorizo o contato para retorno da minha solicitação.
-  </Text>
-</Checkbox>
-                  <Box
-                    as="label"
-                    htmlFor="consent"
-                    fontFamily="'Inter', sans-serif"
-                    fontSize="sm"
-                    color="brand.muted"
-                    cursor="pointer"
+              {submitted ? (
+                <VStack py={8} spacing={3} textAlign="center">
+                  <Heading
+                    fontFamily="'Cormorant Garamond', serif"
+                    fontSize="1.5rem"
+                    color="brand.text"
                   >
-                    Autorizo o contato para retorno da minha solicitação.
-                  </Box>
-                </HStack>
-
-                {/* Submit */}
-                <Button
-                  type="submit"
-                  w="full" h="56px"
-                  bg="brand.fig" color="white"
-                  fontFamily="'Manrope', sans-serif"
-                  fontSize="0.75rem" fontWeight="700"
-                  letterSpacing="0.12em" textTransform="uppercase"
-                  borderRadius="12px"
-                  rightIcon={<Icon as={MdArrowForward} boxSize={5} />}
-                  _hover={{ bg: 'brand.figHover' }}
-                  isDisabled={!checked}
-                  aria-disabled={!checked}
-                >
-                  Enviar Mensagem
-                </Button>
-
-                <HStack spacing={2} justify="center">
-                  <Icon as={MdLock} boxSize={3} color="brand.muted" />
-                  <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="brand.muted">
-                    Responderemos em até 24h úteis.
+                    Mensagem enviada com sucesso!
+                  </Heading>
+                  <Text fontFamily="'Inter', sans-serif" fontSize="sm" color="brand.muted">
+                    Obrigado pelo contato. Retornaremos em breve.
                   </Text>
-                </HStack>
+                </VStack>
+              ) : (
+                <VStack spacing={4}>
+                  {/* Row 1 */}
+                  <Grid templateColumns={{ base: '1fr', sm: '1fr 1fr' }} gap={4} w="full">
+                    <FloatingInput label="Seu nome" name="nome" icon={MdPerson} />
+                    <FloatingInput label="Seu e-mail" name="email" icon={MdEmail} type="email" />
+                  </Grid>
 
-              </VStack>
+                  {/* Row 2 */}
+                  <Grid templateColumns={{ base: '1fr', sm: '1fr 1fr' }} gap={4} w="full">
+                    <FloatingInput label="Seu WhatsApp" name="whatsapp" icon={FaWhatsapp} />
+                    <FloatingSelect label="Modalidade de atendimento" name="modalidade" icon={MdCalendarToday}>
+                      <option value="online">Online</option>
+                      <option value="presencial">Presencial</option>
+                      <option value="ambos">Ambos</option>
+                    </FloatingSelect>
+                  </Grid>
+
+                  {/* Textarea */}
+                  <Box w="full">
+                    <FloatingTextarea label="Como posso ajudar" name="mensagem" />
+                  </Box>
+
+                  {/* Checkbox */}
+                  <HStack w="full" spacing={3}>
+                    <Checkbox
+                      id="consent"
+                      name="consentimento"
+                      isChecked={checked}
+                      onChange={(e) => setChecked(e.target.checked)}
+                      borderColor="rgba(94,75,86,0.3)"
+                      sx={{
+                        '& .chakra-checkbox__control[data-checked]': {
+                          bg: 'brand.fig', borderColor: 'brand.fig',
+                        }
+                      }}
+                    >
+                      <Text
+                        fontFamily="'Inter', sans-serif"
+                        fontSize="sm"
+                        color="brand.muted"
+                      >
+                        Autorizo o contato para retorno da minha solicitação.
+                      </Text>
+                    </Checkbox>
+                  </HStack>
+
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    w="full" h="56px"
+                    bg="brand.fig" color="white"
+                    fontFamily="'Manrope', sans-serif"
+                    fontSize="0.75rem" fontWeight="700"
+                    letterSpacing="0.12em" textTransform="uppercase"
+                    borderRadius="12px"
+                    rightIcon={<Icon as={MdArrowForward} boxSize={5} />}
+                    _hover={{ bg: 'brand.figHover' }}
+                    isLoading={isSubmitting}
+                    isDisabled={!checked}
+                    aria-disabled={!checked}
+                  >
+                    Enviar Mensagem
+                  </Button>
+
+                  <HStack spacing={2} justify="center">
+                    <Icon as={MdLock} boxSize={3} color="brand.muted" />
+                    <Text fontFamily="'Inter', sans-serif" fontSize="xs" color="brand.muted">
+                      Responderemos em até 24h úteis.
+                    </Text>
+                  </HStack>
+                </VStack>
+              )}
             </Box>
           </GridItem>
         </Grid>
@@ -485,13 +522,15 @@ export default function Contact() {
           </HStack>
 
           {[
-            { icon: FaWhatsapp,  href: 'https://wa.me/5541987820288',      label: 'Fale pelo WhatsApp',     sub: '(41) 98782-0288' },
+            { icon: FaWhatsapp,  href: 'https://wa.me/5541987820288',       label: 'Fale pelo WhatsApp',     sub: '(41) 98782-0288' },
             { icon: FaInstagram, href: 'https://instagram.com/',           label: 'Acompanhe no Instagram', sub: '@psi.geisacosta' },
-            { icon: FaEnvelope,  href: 'mailto:geisacosta.psicanalista@outlook.com', label: 'Ou envie um e-mail',     sub: 'geisacosta.psicanalista@outlook.com' },
+            { icon: FaEnvelope,  href: 'mailto:geisacostapsicanalista@gmail.com', label: 'Ou envie um e-mail',     sub: 'geisacostapsicanalista@gmail.com' },
           ].map(({ icon, href, label, sub }) => (
             <HStack
-              key={label} spacing={3}
-              as={Link} href={href}
+              key={label}
+              spacing={3}
+              as={Link}
+              href={href}
               isExternal={!href.startsWith('mailto')}
               _hover={{ textDecoration: 'none', opacity: 0.8 }}
               aria-label={`${label}: ${sub}`}
